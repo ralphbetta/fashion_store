@@ -1,7 +1,7 @@
 import 'package:fashion_shop/config/SizeConfig.dart';
 import 'package:fashion_shop/models/category.dart';
-import 'package:fashion_shop/screens/home.dart';
-import 'package:fashion_shop/storage/dataset.dart';
+import 'package:fashion_shop/screens/mainScreen.dart';
+import 'package:fashion_shop/storage/category_temp.dart';
 import 'package:fashion_shop/storage/db.dart';
 import 'package:fashion_shop/utilities/route.dart';
 import 'package:fashion_shop/utilities/style.dart';
@@ -69,7 +69,7 @@ class _OnboardingState extends State<Onboarding> {
             PrimaryButton(
               title: "Continue",
               action: () {
-                irreversibleNavigate(context, Home());
+                irreversibleNavigate(context, MainScreen());
               },
             ),
             SizedBox(

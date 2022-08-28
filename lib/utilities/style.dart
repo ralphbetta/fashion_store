@@ -32,3 +32,8 @@ SystemUiOverlayStyle customOverlay(ThemeData themedata) {
       statusBarColor: themedata.scaffoldBackgroundColor,
       statusBarIconBrightness: Brightness.dark);
 }
+
+SystemUiOverlayStyle customColoredOverlay(Color color) {
+  return SystemUiOverlayStyle(
+      statusBarColor: color, statusBarIconBrightness: Brightness.dark);
+}

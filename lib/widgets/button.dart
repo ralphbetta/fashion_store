@@ -52,7 +52,7 @@ class _ButtonState extends State<Button> {
           backgroundColor: MaterialStateProperty.all<Color>(
               Theme.of(context).scaffoldBackgroundColor),
           padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
-              const EdgeInsets.symmetric(vertical: 22)),
+              const EdgeInsets.symmetric(vertical: 20)),
           shape: MaterialStateProperty.all<RoundedRectangleBorder>(
               RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(30.0),
@@ -65,8 +65,13 @@ class PrimaryButton extends StatefulWidget {
   final Function()? action;
   final String title;
   final bool isLoading;
+  final int padding;
   const PrimaryButton(
-      {Key? key, this.action, required this.title, this.isLoading = false})
+      {Key? key,
+      this.action,
+      required this.title,
+      this.isLoading = false,
+      this.padding = 0})
       : super(key: key);
 
   @override
@@ -103,7 +108,9 @@ class _PrimaryButtonState extends State<PrimaryButton> {
           // backgroundColor:
           //     MaterialStateProperty.all<Color>(Colors.transparent),
           padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
-              const EdgeInsets.symmetric(vertical: 22)),
+              EdgeInsets.symmetric(
+                  vertical: 20,
+                  horizontal: SizeConfig().getPercentageWidth(widget.padding))),
           shape: MaterialStateProperty.all<RoundedRectangleBorder>(
               RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(30.0),
@@ -174,7 +181,7 @@ class _GradientButton2State extends State<GradientButton2> {
             // backgroundColor:
             //     MaterialStateProperty.all<Color>(Colors.transparent),
             padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
-                const EdgeInsets.symmetric(vertical: 22)),
+                const EdgeInsets.symmetric(vertical: 20)),
             shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                 RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(30.0),
