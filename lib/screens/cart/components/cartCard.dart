@@ -2,82 +2,7 @@ import 'package:fashion_shop/config/SizeConfig.dart';
 import 'package:fashion_shop/storage/db.dart';
 import 'package:fashion_shop/storage/products_temp.dart';
 import 'package:fashion_shop/utilities/style.dart';
-import 'package:fashion_shop/widgets/button.dart';
-import 'package:fashion_shop/widgets/circleButton.dart';
-import 'package:fashion_shop/widgets/customAppBar.dart';
 import 'package:flutter/material.dart';
-
-class CartScreen extends StatefulWidget {
-  const CartScreen({Key? key}) : super(key: key);
-
-  @override
-  State<CartScreen> createState() => _CartScreenState();
-}
-
-class _CartScreenState extends State<CartScreen> {
-  @override
-  Widget build(BuildContext context) {
-    SizeConfig size = SizeConfig();
-    ThemeData themeData = Theme.of(context);
-    return Scaffold(
-        appBar: customAppBar(context, themeData, hasBack: true),
-        body: SafeArea(
-            child: Column(
-          children: [
-            Expanded(
-                child: SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Container(
-                    width: double.infinity,
-                    height: size.getPercentageHeight(40),
-                    child: ListView(
-                      children: [
-                        ...List.generate(
-                            cartProduct.length,
-                            (index) => CartCard(
-                                  themeData: themeData,
-                                  size: size,
-                                  index: index,
-                                ))
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            )),
-            Container(
-              padding:
-                  EdgeInsets.symmetric(horizontal: size.getPercentageWidth(4)),
-              decoration: BoxDecoration(
-                  border: Border(
-                      top: BorderSide(width: 3, color: Colors.grey.shade300))),
-              width: size.getPercentageWidth(100),
-              height: size.getPercentageHeight(9),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  CircularBotton(
-                    color: Colors.grey.shade200,
-                    isImage: false,
-                    icon: Icons.shopping_cart,
-                    iconColor: Theme.of(context).primaryColor,
-                  ),
-                  PrimaryButton(
-                    title: "Add to chart",
-                    padding: 25,
-                    action: () {
-                      print("object");
-                    },
-                  ),
-                ],
-              ),
-            )
-          ],
-        )));
-  }
-}
 
 class CartCard extends StatefulWidget {
   const CartCard(
@@ -96,19 +21,21 @@ class CartCard extends StatefulWidget {
 }
 
 class _CartCardState extends State<CartCard> {
+  /*----------------------------
+      product quantity reduction
+      ------------------------------------*/
   void _reduceQuantity() {
     if (cartProduct[widget.index].orderQty > 1) {
       setState(() {
         cartProduct[widget.index].orderQty =
             cartProduct[widget.index].orderQty - 1;
       });
-    } else {
-      setState(() {
-        cartProduct.remove(cartProduct[widget.index]);
-      });
     }
   }
 
+  /*----------------------------
+    product quantity increamentor
+      ------------------------------------*/
   void _increaseQuantity() {
     if (cartProduct[widget.index].orderQty <=
         int.parse(cartProduct[widget.index].quantity)) {
@@ -148,9 +75,17 @@ class _CartCardState extends State<CartCard> {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                cartProduct[widget.index].name,
-                style: darkPrimaryStyle(context, 16, true),
+              SizedBox(
+                width: SizeConfig().getPercentageWidth(40),
+                child: Text(
+                  cartProduct[widget.index].name,
+                  overflow: TextOverflow.ellipsis,
+                  style: darkPrimaryStyle(
+                    context,
+                    16,
+                    true,
+                  ),
+                ),
               ),
               Text(
                 cartProduct[widget.index].category,

@@ -1,7 +1,7 @@
 import 'package:fashion_shop/config/AppConfig.dart';
 import 'package:fashion_shop/config/SizeConfig.dart';
 import 'package:fashion_shop/screens/onboarding.dart';
-import 'package:fashion_shop/screens/signup.dart';
+import 'package:fashion_shop/screens/auth/signup.dart';
 import 'package:fashion_shop/screens/splash.dart';
 import 'package:fashion_shop/utilities/route.dart';
 import 'package:fashion_shop/utilities/style.dart';
@@ -168,32 +168,6 @@ class _LoginState extends State<Login> {
                   ],
                 ),
               ),
-
-              /*---------------------------------
-              social login
-              ---------------------------------*/
-              // Padding(
-              //   padding: EdgeInsets.symmetric(
-              //       vertical: SizeConfig().getPercentageHeight(2)),
-              //   child: Row(
-              //     mainAxisAlignment: MainAxisAlignment.center,
-              //     children: const [
-              //       CircularBotton(
-              //         image: 'assets/images/icons/facebook.png',
-              //         color: kFacebook,
-              //       ),
-              //       CircularBotton(
-              //         image: 'assets/images/icons/google-plus.png',
-              //         color: kGoogle,
-              //       ),
-              //       CircularBotton(
-              //         image: 'assets/images/icons/twitter.png',
-              //         color: kTwitter,
-              //       ),
-              //     ],
-              //   ),
-              // ),
-
               Container(
                 decoration: BoxDecoration(
                     color: themedata.primaryColorDark.withOpacity(0.05),
@@ -229,16 +203,11 @@ class _LoginState extends State<Login> {
                   ),
                   GestureDetector(
                     onTap: () {
-                      // irreversibleNavigate(context, Signup());
+                      irreversibleNavigate(context, const Signup());
                     },
-                    child: GestureDetector(
-                      onTap: () {
-                        irreversibleNavigate(context, Signup());
-                      },
-                      child: Text(
-                        "Sign Up",
-                        style: primaryStyle(context, SizeConfig.small, false),
-                      ),
+                    child: Text(
+                      "Sign Up",
+                      style: primaryStyle(context, SizeConfig.small, false),
                     ),
                   ),
                 ],

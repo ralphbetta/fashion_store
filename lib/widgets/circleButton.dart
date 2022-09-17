@@ -22,7 +22,7 @@ class CircularBotton extends StatelessWidget {
     return GestureDetector(
       onTap: action,
       child: Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.all(4.0),
         child: Container(
             padding: const EdgeInsets.all(10.0),
             decoration: BoxDecoration(

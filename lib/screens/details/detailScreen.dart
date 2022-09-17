@@ -1,6 +1,10 @@
 import 'package:fashion_shop/config/SizeConfig.dart';
 import 'package:fashion_shop/models/product.dart';
+import 'package:fashion_shop/screens/cart/cartScreen.dart';
+import 'package:fashion_shop/screens/details/components/detailRating.dart';
+import 'package:fashion_shop/screens/details/components/detailSizeSelector.dart';
 import 'package:fashion_shop/storage/db.dart';
+import 'package:fashion_shop/utilities/route.dart';
 import 'package:fashion_shop/utilities/style.dart';
 import 'package:fashion_shop/widgets/button.dart';
 import 'package:fashion_shop/widgets/circleButton.dart';
@@ -16,6 +20,9 @@ class DetailScreen extends StatefulWidget {
 }
 
 class _DetailScreenState extends State<DetailScreen> {
+  /*---------------------------------
+  Favourite function
+  ---------------------------------*/
   void _initiateFavourite(ProductModel product) {
     if (favouriteProduct.contains(product)) {
       setState(() {
@@ -27,11 +34,29 @@ class _DetailScreenState extends State<DetailScreen> {
       });
     }
   }
+  /*---------------------------------
+  Add and remove from cart function
+  ---------------------------------*/
+
+  void _initiateCart(ProductModel product) {
+    if (cartProduct.contains(product)) {
+      setState(() {
+        cartProduct.remove(product);
+      });
+    } else {
+      setState(() {
+        cartProduct.add(product);
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     SizeConfig size = SizeConfig();
     return Scaffold(
+        /*---------------------------------
+        Detailpage appBar
+        ---------------------------------*/
         appBar: AppBar(
           leading: CircularBotton(
             color: Colors.white,
@@ -59,6 +84,10 @@ class _DetailScreenState extends State<DetailScreen> {
             )
           ],
         ),
+
+        /*---------------------------------
+        Detailpage body
+        ---------------------------------*/
         body: SafeArea(
             child: Column(
           children: [
@@ -67,6 +96,9 @@ class _DetailScreenState extends State<DetailScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  /*---------------------------------
+                   Product Image display
+                  ---------------------------------*/
                   Container(
                     width: double.infinity,
                     height: size.getPercentageHeight(40),
@@ -76,6 +108,9 @@ class _DetailScreenState extends State<DetailScreen> {
                             bottom: Radius.circular(30))),
                     child: Image(image: AssetImage(widget.product.image)),
                   ),
+                  /*---------------------------------
+                  Title and price section
+                  ---------------------------------*/
                   Padding(
                     padding: EdgeInsets.symmetric(
                         vertical: size.getPercentageWidth(2),
@@ -108,6 +143,9 @@ class _DetailScreenState extends State<DetailScreen> {
                       ],
                     ),
                   ),
+                  /*---------------------------------
+                   Rating Section
+                  ---------------------------------*/
                   Padding(
                     padding: EdgeInsets.only(
                         left: size.getPercentageWidth(4),
@@ -116,6 +154,9 @@ class _DetailScreenState extends State<DetailScreen> {
                       avgRate: 3,
                     ),
                   ),
+                  /*---------------------------------
+                  Size selector
+                  ---------------------------------*/
                   Padding(
                     padding: EdgeInsets.symmetric(
                         horizontal: size.getPercentageWidth(4)),
@@ -123,14 +164,17 @@ class _DetailScreenState extends State<DetailScreen> {
                   ),
                   seperator(context, "Size"),
                   widget.product.category == 'shoes'
-                      ? ShoeSizeSelector()
+                      ? const ShoeSizeSelector()
                       : SizeSelector(size: size)
                 ],
               ),
             )),
+            /*---------------------------------
+              Detailpage footer
+              ---------------------------------*/
             Container(
               padding:
-                  EdgeInsets.symmetric(horizontal: size.getPercentageWidth(4)),
+                  EdgeInsets.symmetric(horizontal: size.getPercentageWidth(3)),
               decoration: BoxDecoration(
                   border: Border(
                       top: BorderSide(width: 3, color: Colors.grey.shade300))),
@@ -144,12 +188,17 @@ class _DetailScreenState extends State<DetailScreen> {
                     isImage: false,
                     icon: Icons.shopping_cart,
                     iconColor: Theme.of(context).primaryColor,
+                    action: () {
+                      reversibleNavigation(context, const CartScreen());
+                    },
                   ),
                   PrimaryButton(
-                    title: "Add to chart",
-                    padding: 25,
+                    title: cartProduct.contains(widget.product)
+                        ? "Remove From Cart"
+                        : "Add to chart",
+                    padding: 23,
                     action: () {
-                      print("object");
+                      _initiateCart(widget.product);
                     },
                   ),
                 ],
@@ -157,138 +206,5 @@ class _DetailScreenState extends State<DetailScreen> {
             )
           ],
         )));
-  }
-}
-
-class ShoeSizeSelector extends StatefulWidget {
-  const ShoeSizeSelector({Key? key}) : super(key: key);
-
-  @override
-  State<ShoeSizeSelector> createState() => _ShoeSizeSelectorState();
-}
-
-class _ShoeSizeSelectorState extends State<ShoeSizeSelector> {
-  List size = ["20", "24", "30", "32", "38", "40", "48"];
-  int activeSize = 1;
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding:
-          EdgeInsets.symmetric(horizontal: SizeConfig().getPercentageWidth(4)),
-      child: SizedBox(
-        width: SizeConfig().getPercentageWidth(100),
-        height: SizeConfig().getPercentageWidth(10),
-        child: ListView(
-          scrollDirection: Axis.horizontal,
-          children: [
-            ...List.generate(
-                size.length,
-                (index) => GestureDetector(
-                      onTap: () {
-                        setState(() {
-                          activeSize = index;
-                        });
-                      },
-                      child: Container(
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(5),
-                            color: activeSize == index
-                                ? Theme.of(context).primaryColor
-                                : Colors.grey.shade200),
-                        child: Center(
-                          child: Text(
-                            size[index],
-                            style: darkPrimaryStyle(context, 18, true),
-                          ),
-                        ),
-                        width: SizeConfig().getPercentageWidth(10),
-                        height: SizeConfig().getPercentageWidth(10),
-                        margin: EdgeInsets.only(
-                            right: SizeConfig().getPercentageWidth(4)),
-                      ),
-                    ))
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class SizeSelector extends StatefulWidget {
-  const SizeSelector({
-    Key? key,
-    required this.size,
-  }) : super(key: key);
-
-  final SizeConfig size;
-
-  @override
-  State<SizeSelector> createState() => _SizeSelectorState();
-}
-
-class _SizeSelectorState extends State<SizeSelector> {
-  List size = ["S", "M", "L", "XL"];
-  int activeSize = 1;
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding:
-          EdgeInsets.symmetric(horizontal: widget.size.getPercentageWidth(4)),
-      child: Row(
-        children: [
-          ...List.generate(
-              size.length,
-              (index) => GestureDetector(
-                    onTap: () {
-                      setState(() {
-                        activeSize = index;
-                      });
-                    },
-                    child: Container(
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(5),
-                          color: activeSize == index
-                              ? Theme.of(context).primaryColor
-                              : Colors.grey.shade200),
-                      child: Center(
-                        child: Text(
-                          size[index],
-                          style: darkPrimaryStyle(context, 18, true),
-                        ),
-                      ),
-                      width: SizeConfig().getPercentageWidth(10),
-                      height: SizeConfig().getPercentageWidth(10),
-                      margin: EdgeInsets.only(
-                          right: SizeConfig().getPercentageWidth(4)),
-                    ),
-                  ))
-        ],
-      ),
-    );
-  }
-}
-
-class Rating extends StatelessWidget {
-  final int avgRate;
-  const Rating({
-    required this.avgRate,
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Wrap(
-      children: [
-        ...List.generate(
-            5,
-            (index) => Icon(
-                  Icons.star,
-                  size: 20,
-                  color: index + 1 <= avgRate
-                      ? Colors.orange
-                      : Colors.grey.shade300,
-                ))
-      ],
-    );
   }
 }

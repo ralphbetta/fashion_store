@@ -3,7 +3,7 @@ import 'dart:ui';
 import 'package:fashion_shop/config/AppConfig.dart';
 import 'package:fashion_shop/config/SizeConfig.dart';
 import 'package:fashion_shop/models/splash.dart';
-import 'package:fashion_shop/screens/login.dart';
+import 'package:fashion_shop/screens/auth/login.dart';
 import 'package:fashion_shop/utilities/route.dart';
 import 'package:fashion_shop/utilities/style.dart';
 import 'package:fashion_shop/widgets/button.dart';

@@ -1,5 +1,6 @@
 import 'package:fashion_shop/config/SizeConfig.dart';
 import 'package:fashion_shop/models/category.dart';
+import 'package:fashion_shop/models/product.dart';
 import 'package:fashion_shop/storage/advert_temp.dart';
 import 'package:fashion_shop/storage/category_temp.dart';
 import 'package:fashion_shop/storage/products_temp.dart';
@@ -22,6 +23,25 @@ class _HomeScreenState extends State<HomeScreen> {
   void updateCategories() {
     if (onboardingData.first.title != 'All') {
       onboardingData.insert(0, CategoryModel(title: "All", image: ""));
+    }
+  }
+
+  List<ProductModel> _thisProduct = productTempData;
+
+  //String activeCategories = 'All';
+
+  void loadProduct(String activeCategories) {
+    if (activeCategories == 'all') {
+      setState(() {
+        _thisProduct = productTempData;
+      });
+    } else {
+      setState(() {
+        _thisProduct = productTempData
+            .where(
+                (element) => element.category == activeCategories.toLowerCase())
+            .toList();
+      });
     }
   }
 
@@ -112,13 +132,15 @@ class _HomeScreenState extends State<HomeScreen> {
                 itemBuilder: (BuildContext context, index) {
                   return GestureDetector(
                     onTap: () {
+                      //print(onboardingData[index].title);
+                      loadProduct(onboardingData[index].title.toLowerCase());
                       setState(() {
                         activeCatIndex = index;
                       });
                     },
                     child: Container(
                       padding: EdgeInsets.symmetric(
-                          vertical: 15, horizontal: size.getPercentageWidth(5)),
+                          vertical: 10, horizontal: size.getPercentageWidth(5)),
                       margin: EdgeInsets.only(left: size.getPercentageWidth(3)),
                       child: Text(
                         onboardingData[index].title,
@@ -140,23 +162,32 @@ class _HomeScreenState extends State<HomeScreen> {
               Product Grid display
             ---------------------------------*/
           Expanded(
-              child: Container(
-            margin: EdgeInsets.only(top: size.getPercentageHeight(3)),
-            padding: EdgeInsets.only(
-                right: size.getPercentageWidth(3),
-                left: size.getPercentageWidth(1)),
-            child: GridView.builder(
-                itemCount: productTempData.length,
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2, //items per row
-                  mainAxisSpacing: 20, //spacing between each box
-                  childAspectRatio: 0.77, //adjusting item height
-                  crossAxisSpacing: 10, //spacing between
-                ),
-                itemBuilder: (BuildContext context, index) {
-                  return ProductCard(index: index);
-                }),
-          )),
+              child: _thisProduct.isNotEmpty
+                  ? Container(
+                      margin: EdgeInsets.only(top: size.getPercentageHeight(3)),
+                      padding: EdgeInsets.only(
+                          right: size.getPercentageWidth(3),
+                          left: size.getPercentageWidth(1)),
+                      child: GridView.builder(
+                          itemCount: _thisProduct.length,
+                          gridDelegate:
+                              const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2, //items per row
+                            mainAxisSpacing: 20, //spacing between each box
+                            childAspectRatio: 0.77, //adjusting item height
+                            crossAxisSpacing: 10, //spacing between
+                          ),
+                          itemBuilder: (BuildContext context, index) {
+                            return ProductCard(
+                              index: index,
+                              product: _thisProduct[index],
+                            );
+                          }),
+                    )
+                  : const Center(
+                      child: Text(
+                          "there is no active product within this categories"),
+                    )),
         ],
       )),
     );

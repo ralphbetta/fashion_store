@@ -1,8 +1,7 @@
 import 'package:fashion_shop/config/SizeConfig.dart';
 import 'package:fashion_shop/models/product.dart';
-import 'package:fashion_shop/screens/detailScreen.dart';
+import 'package:fashion_shop/screens/details/detailScreen.dart';
 import 'package:fashion_shop/storage/db.dart';
-import 'package:fashion_shop/storage/products_temp.dart';
 import 'package:fashion_shop/utilities/colors.dart';
 import 'package:fashion_shop/utilities/route.dart';
 import 'package:fashion_shop/utilities/style.dart';
@@ -13,9 +12,11 @@ class ProductCard extends StatefulWidget {
   const ProductCard({
     Key? key,
     required this.index,
+    required this.product,
   }) : super(key: key);
 
   final int index;
+  final ProductModel product;
 
   @override
   State<ProductCard> createState() => _ProductCardState();
@@ -65,13 +66,12 @@ class _ProductCardState extends State<ProductCard> {
     }
 
     SizeConfig size = SizeConfig();
-    ThemeData themeData = Theme.of(context);
     return GestureDetector(
       onTap: () {
         reversibleNavigation(
             context,
             DetailScreen(
-              product: productTempData[widget.index],
+              product: widget.product,
             ));
       },
       child: Container(
@@ -86,8 +86,7 @@ class _ProductCardState extends State<ProductCard> {
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(20),
                       color: Colors.grey.shade200),
-                  child: Image(
-                      image: AssetImage(productTempData[widget.index].image)),
+                  child: Image(image: AssetImage(widget.product.image)),
                 ),
                 Positioned(
                     right: 0,
@@ -96,14 +95,12 @@ class _ProductCardState extends State<ProductCard> {
                       color: white,
                       isImage: false,
                       icon: Icons.favorite,
-                      iconColor: favouriteProduct
-                              .contains(productTempData[widget.index])
+                      iconColor: favouriteProduct.contains(widget.product)
                           ? Colors.red
                           : Colors.grey.shade300,
                       action: () {
                         //print(favouriteProduct);
-                        _initiateFavourite(productTempData[widget.index]);
-                        print(favouriteProduct);
+                        _initiateFavourite(widget.product);
                       },
                     ))
               ],
@@ -117,10 +114,10 @@ class _ProductCardState extends State<ProductCard> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       SizedBox(
-                        width: SizeConfig().getPercentageWidth(28),
+                        width: SizeConfig().getPercentageWidth(22),
                         child: Text(
-                          productTempData[widget.index].name,
-                          style: darkPrimaryStyle(context, 15, true),
+                          widget.product.name,
+                          style: darkPrimaryStyle(context, 13, true),
                           overflow: TextOverflow.ellipsis,
                         ),
                       ),
@@ -128,18 +125,17 @@ class _ProductCardState extends State<ProductCard> {
                         height: size.getPercentageWidth(2),
                       ),
                       Text(
-                        "\$ " + productTempData[widget.index].price,
-                        style: primaryStyle(context, 16, true),
+                        "\$ " + widget.product.price,
+                        style: primaryStyle(context, 13, true),
                       ),
                     ],
                   ),
                   CircularBotton(
-                    color:
-                        _cartBtnColor(productTempData[widget.index], context),
+                    color: _cartBtnColor(widget.product, context),
                     isImage: false,
-                    icon: _cartIcon(productTempData[widget.index], context),
+                    icon: _cartIcon(widget.product, context),
                     action: () {
-                      _initiateCart(productTempData[widget.index]);
+                      _initiateCart(widget.product);
                       print(cartProduct);
                     },
                   )

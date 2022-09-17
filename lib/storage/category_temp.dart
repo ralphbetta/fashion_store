@@ -2,6 +2,14 @@ import 'package:fashion_shop/models/category.dart';
 
 List<CategoryModel> onboardingData = [
   CategoryModel(
+    title: "Dress",
+    image: "dress.png",
+  ),
+  CategoryModel(
+    title: "Shoes",
+    image: "flatshoes.png",
+  ),
+  CategoryModel(
     title: "Jacket",
     image: "jacket.png",
   ),
@@ -10,7 +18,7 @@ List<CategoryModel> onboardingData = [
     image: "handbag.png",
   ),
   CategoryModel(
-    title: "Spectacle",
+    title: "Eyeglasses",
     image: "spectacle.png",
   ),
   CategoryModel(
@@ -24,14 +32,6 @@ List<CategoryModel> onboardingData = [
   CategoryModel(
     title: "Lab Coat",
     image: "labcoat.png",
-  ),
-  CategoryModel(
-    title: "Dress",
-    image: "dress.png",
-  ),
-  CategoryModel(
-    title: "Flat Shoes",
-    image: "flatshoes.png",
   ),
   CategoryModel(
     title: "Jeans",

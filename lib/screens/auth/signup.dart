@@ -1,6 +1,6 @@
 import 'package:fashion_shop/config/AppConfig.dart';
 import 'package:fashion_shop/config/SizeConfig.dart';
-import 'package:fashion_shop/screens/login.dart';
+import 'package:fashion_shop/screens/auth/login.dart';
 import 'package:fashion_shop/screens/onboarding.dart';
 import 'package:fashion_shop/screens/splash.dart';
 import 'package:fashion_shop/utilities/route.dart';
@@ -151,7 +151,7 @@ class _SignupState extends State<Signup> {
                           text: "By checking, you accept the ",
                           style: const TextStyle(
                             color: Colors.grey,
-                            fontSize: 13.2,
+                            fontSize: 12.2,
                           ),
                           children: [
                         TextSpan(

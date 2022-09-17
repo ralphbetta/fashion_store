@@ -1,7 +1,5 @@
 import 'package:fashion_shop/config/SizeConfig.dart';
 import 'package:fashion_shop/providers/theme.dart';
-import 'package:fashion_shop/screens/login.dart';
-import 'package:fashion_shop/screens/onboarding.dart';
 import 'package:fashion_shop/screens/splash.dart';
 import 'package:flutter/material.dart';
 

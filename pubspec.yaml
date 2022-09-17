@@ -32,6 +32,7 @@ dependencies:
   flutter_local_notifications:
   flutter_native_timezone:
   rxdart:
+  #dateTime Packages
   intl:
   date_picker_timeline:
   sqflite:
@@ -46,6 +47,19 @@ dependencies:
   mask_text_input_formatter:
   image_picker:
   url_launcher:
+  # payment packages
+  pay: ^1.0.8
+  http_auth: ^1.0.0
+
+  webview_flutter: ^2.0.6
+  shared_preferences: ^2.0.6  
+  razorpay_flutter: ^1.2.6
+  flutter_paystack: ^1.0.5+1
+
+  #scanner dependencies
+  barcode_widget: ^2.0.3
+  flutter_barcode_scanner: ^2.0.0
+
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -80,6 +94,7 @@ flutter:
     - assets/icons/
     - assets/images/icons/
     - assets/images/categories/
+    - assets/images/products/
     - assets/images/products/dress/
     - assets/images/products/eyeglasses/
     - assets/images/products/handbag/
@@ -87,6 +102,7 @@ flutter:
     - assets/images/products/jeans/
     - assets/images/products/shoes/
     - assets/images/advert/
+    - assets/images/user/
     
   #   - images/a_dot_ham.jpeg
 

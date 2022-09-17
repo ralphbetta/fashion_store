@@ -6,6 +6,7 @@ class ProductModel {
   final String quantity;
   final String image;
   final String desc;
+  final String? barCode;
   int orderQty;
 
   ProductModel({
@@ -16,6 +17,7 @@ class ProductModel {
     required this.rating,
     required this.quantity,
     required this.image,
+    this.barCode,
     required this.desc,
   });
 }

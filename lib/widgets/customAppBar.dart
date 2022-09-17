@@ -1,4 +1,4 @@
-import 'package:fashion_shop/screens/cartScreen.dart';
+import 'package:fashion_shop/screens/cart/cartScreen.dart';
 import 'package:fashion_shop/storage/db.dart';
 import 'package:fashion_shop/utilities/route.dart';
 import 'package:fashion_shop/utilities/style.dart';
@@ -13,7 +13,7 @@ AppBar customAppBar(BuildContext context, ThemeData themeData,
               Navigator.pop(context);
             },
             icon: const Icon(Icons.arrow_back_ios))
-        : IconButton(onPressed: () {}, icon: Icon(Icons.menu_rounded)),
+        : null, //IconButton(onPressed: () {}, icon: Icon(Icons.menu_rounded)),
     actions: [
       IconButton(onPressed: () {}, icon: const Icon(Icons.search)),
       Stack(
