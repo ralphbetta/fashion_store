@@ -1,4 +1,4 @@
-# Fregies Mobile App
+# Sixtore Mobile App
 A functional groceries store application
 
 ## Table of contents
